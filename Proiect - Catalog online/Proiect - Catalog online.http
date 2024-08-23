@@ -1,0 +1,6 @@
+@Proiect___Catalog_online_HostAddress = http://localhost:5042
+
+GET {{Proiect___Catalog_online_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
