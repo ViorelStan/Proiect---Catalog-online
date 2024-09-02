@@ -6,6 +6,7 @@ namespace Proiect___Catalog_online.DTO
     public class MarkToCreateDto
     {
 
+        [Required]
         [Range(1, 10)]
         public int MarkValue { get; set; }
         public int SubjectId { get; set; }

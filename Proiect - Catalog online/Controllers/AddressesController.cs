@@ -32,9 +32,6 @@ namespace Proiect___Catalog_online.Controllers
                addressesService.AddAddress(
                    addressToCreate.City, addressToCreate.Street, addressToCreate.No
                    ).ToAddressToGet();
-        //[HttpPost("add-student-to-address/{addressId}")]
-        //[ProducesResponseType(StatusCodes.Status200OK)]
-        //[ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(string))]
 
 
     }

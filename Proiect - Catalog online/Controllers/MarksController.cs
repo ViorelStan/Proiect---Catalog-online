@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Proiect___Catalog_online.Data;
@@ -28,19 +29,55 @@ namespace Proiect___Catalog_online.Controllers
             this.ctx = ctx;
 
         }
+        //[HttpPost]
+        //public Mark AddMark([FromBody] MarkToCreateDto markToCreateDto)
+        //{
+        //    var mark = new Mark
+        //    {
+        //        MarkValue = markToCreateDto.MarkValue,
+        //        StudentId = markToCreateDto.StudentId,
+        //        SubjectId = markToCreateDto.SubjectId,
+        //    };
+        //    ctx.Marks.Add(mark);
+        //    ctx.SaveChanges();
+        //    return mark;
+        //}
         [HttpPost]
-        public Mark AddMark([FromBody] MarkToCreateDto markToCreateDto)
+        //[ProducesResponseType(StatusCodes.Status201Created, Type = typeof(StudentToUpdate))]
+        public async Task<IActionResult> CreateMark([FromBody] MarkToCreateDto markToCreateDto)
         {
+            if (markToCreateDto == null)
+            {
+                return BadRequest("Subject data is null");
+            }
             var mark = new Mark
             {
                 MarkValue = markToCreateDto.MarkValue,
                 StudentId = markToCreateDto.StudentId,
                 SubjectId = markToCreateDto.SubjectId,
+
             };
+
             ctx.Marks.Add(mark);
-            ctx.SaveChanges();
-            return mark;
+            await ctx.SaveChangesAsync();
+
+            // Returnează 201 Created și specifică locația resursei nou create
+            return CreatedAtAction(nameof(GetMarkById), new { id = mark.Id }, mark);
         }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetMarkById(int id)
+        {
+            var mark = await ctx.Marks.FindAsync(id);
+
+            if (mark == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(mark);
+        }
+
+
 
         [HttpGet("{studentId}")]
         public ActionResult<IEnumerable<Mark>> GetMarksForStudent(int studentId)

@@ -17,6 +17,7 @@ builder.Services.AddDbContext<StudentsRegistryDbContext>(
 builder.Services.AddScoped<StudentsService>();
 builder.Services.AddScoped<AddressesService>();
 builder.Services.AddScoped<MarksService>();
+builder.Services.AddScoped<SubjectsService>();
 
 builder.Services.AddControllers();
 
